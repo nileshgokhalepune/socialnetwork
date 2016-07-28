@@ -17,6 +17,7 @@ div(class="logindialog")
 
 script.
     function GetChildValue(val){
+        alert("called getchilde");
         var t = val.split('&')[0].split('=');
         var v = val.split('&')[1].split('=');
         window.location.href= "/social/" + t + "/" + v; 
