@@ -1,0 +1,16 @@
+div(class="logindialog")
+    div(class="panel panel-default")
+        div(class="panel panel-heading")
+            span Login
+        div(class="panel panel-body")
+            label(class="label label-default") User Name
+            input(type="text",placeholder="Enter user name..",class="form-control")
+            label(class="label label-default") Password
+            input(type="password", placeholder="Enter password..", class="form-control")
+            div(class="login-buttons")
+                button(class="btn btn-primary") Sign in
+                button(class="btn btn-success") Register
+        ul(class="oauthOImages")
+            li #[a(ng-click="login('t')") #[img(src="/images/twitter.png",height="20px", width="20px")]]
+            li #[a(href="#",ng-click="login('f')") #[img(src="/images/facebook.jpg",height="20px", width="20px")]]
+            li #[a(href="#",ng-click="login('g')") #[img(src="/images/googleplus.jpg",height="20px", width="20px")]]

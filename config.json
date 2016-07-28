@@ -1,0 +1,11 @@
+{
+    "server":{
+        "protocol": "http",
+        "host": "50.21.186.153:3000"
+    },
+    "twitter":{
+        "key": "IGe5AiDFqZ1wXBkWRXTgScSS4",
+        "secret": "VbtFfYbOgkzN99AGH4lKE0vAIKHp8Che7xG6MGIHEZdQCl8Qu7",
+        "callback": "/twitter/callback/"
+    }
+}
