@@ -4,6 +4,7 @@
 
         $routeProvider
             .when('/', { templateUrl: 'partials/login', controller: 'loginCtrl' })
+            .when('/main',{tmeplateUrl:'partials/main', controller: 'mainCtrl'})
             .otherwise({ templateUrl: 'partials/login', controller: 'loginCtrl' });
     });
 

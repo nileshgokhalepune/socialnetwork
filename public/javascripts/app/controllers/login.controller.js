@@ -10,13 +10,12 @@
 
         function login(thirdparty) {
             DataSvc.accessThirdParty(thirdparty).then(function (res) {
-                alert(res.data);
                 $scope.authdata = res.data.oauthData.split('&');
                 var token = $scope.authdata[0].split('=')[1];
                 var secrent = $scope.authdata[1].split('=')[1];
-                var win = window.open(res.data.tokenUri + "?oauth_token=" + token, "_blank");
+                var win = window.open(res.data.tokenUri + "?oauth_token=" + token,"Authentication","height=200;width=200");
             }, function (err) {
-                alert(err);
+                alert("In Error"  + err);
             });
         }
     }

@@ -38,11 +38,7 @@ app.use('/api',apis);
 app.get('/partials/:name', function (req, res) {
   res.render('partials/' + req.params.name);
 });
-
-
-app.get('/twitter/callback/', function(req, res){
-    res.redner('index',{title:'Done'});
-});
+ 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found');
