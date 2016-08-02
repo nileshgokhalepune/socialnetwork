@@ -1,4 +1,5 @@
 var express = require('express');
+var htmlDecode = require('js-htmlencode').htmlDecode;
 var router = express.Router();
 var request = require('request');
 var qs = require("querystring"),
@@ -19,7 +20,7 @@ router.get('/', function (req, res) {
 });
 
 router.get('/callback', function (req, res, next) {
-    console.log(req.query.oauth_verifier);
+    // console.log(req.query.oauth_verifier);
     var data = qs.parse(req.query);
 
     request.post({
@@ -31,15 +32,21 @@ router.get('/callback', function (req, res, next) {
         }
     }, function (e, resp, body) {
         var parms = qs.parse(body);
-        console.log(parms);
+        //console.log(parms);
         res.render('auth', { authToken: body });
 
     });
 
 });
 
-router.get('/:oauth_token/:oauth_secret', function (req, res) {
-    console.log(req);
+router.get('/:oauth_token', function (req, res) {
+    var decoded = htmlDecode(req.params.oauth_token);
+    //console.log(decoded);
+    var tokens = qs.parse(decoded);
+    console.log(tokens);
+    req.session.user = tokens.screen_name;
+    req.session.auth = true;
+    //console.log(tokens);
     res.redirect(302, '/social/');
 });
 

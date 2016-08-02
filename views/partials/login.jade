@@ -16,8 +16,10 @@ div(class="logindialog")
             li #[a(href="#",ng-click="login('google')") #[img(src="/images/googleplus.jpg",height="20px", width="20px")]]
 
 script.
-    function GetChildValue(val){
-        var t = val.split('&')[0].split('=');
+    function GetChildValue(val){ 
+        var t = val.split('&')[0].split('='); 
         var v = val.split('&')[1].split('=');
-        window.location.href= "/twitter/" + t + "/" + v; 
+        //document.write(val);
+        //window.location.href= "/twitter/" + t + "/" + v;
+        window.location.href= "/twitter/" + val; 
     }

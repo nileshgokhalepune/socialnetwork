@@ -2,11 +2,23 @@
     'use strict';
     angular.module('app').controller('loginCtrl', loginCtrl)
 
-    loginCtrl.$inject = ['$scope', 'DataSvc'];
+    loginCtrl.$inject = ['$scope', '$state', 'DataSvc'];
 
-    function loginCtrl($scope, DataSvc) {
+    function loginCtrl($scope, $state, DataSvc) {
         $scope.authdata;
         $scope.login = login;
+
+        activate();
+
+        function activate(){
+            DataSvc.checkAuth().then(function(res){
+                if(res.data == true){
+                    $state.go('/main');
+                }
+            },function(err){
+                
+            })
+        }
 
         function login(thirdparty) {
             DataSvc.accessThirdParty(thirdparty).then(function (res) {

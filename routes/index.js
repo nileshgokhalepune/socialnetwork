@@ -3,12 +3,12 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  console.log(req.parms);
+  console.log(req.session.auth);
   //res.end();
-  if (req.params.auth) {
-    res.render('index', { title: 'Social Network', auth: 'true' });
+  if (req.session.auth) {
+    res.render('index', { title: 'Social Network', auth: '1', screenName:  req.session.user ?  req.session.user : 'None' });
   } else {
-    res.render('index', { title: 'Social Network', auth:'false' });
+    res.render('index', { title: 'Social Network', auth:'false', screenName:  req.session.user ?  req.session.user : 'None' });
   }
 });
 
