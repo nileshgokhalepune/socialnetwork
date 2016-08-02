@@ -13,6 +13,7 @@ var crypto = require('crypto');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var apis = require('./routes/apis');
+var twitter= require('./routes/twitter');
 
 var app = express();
 
@@ -33,7 +34,8 @@ app.use(session({ secret: 'very secret' }));
 
 app.use('/social', routes);
 app.use('/users', users);
-app.use('/api',apis);
+app.use('/api', apis);
+app.use('/twitter', twitter);
 
 app.get('/partials/:name', function (req, res) {
   res.render('partials/' + req.params.name);

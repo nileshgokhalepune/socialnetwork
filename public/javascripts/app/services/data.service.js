@@ -9,7 +9,7 @@
         this.accessThirdParty = accessThirdParty;
 
         function accessThirdParty(key){
-            return $http.get('/api');
+            return $http.get('/' + key);
         }
     }
 

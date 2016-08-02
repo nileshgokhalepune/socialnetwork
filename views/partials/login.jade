@@ -11,14 +11,13 @@ div(class="logindialog")
                 button(class="btn btn-primary") Sign in
                 button(class="btn btn-success") Register
         ul(class="oauthOImages")
-            li #[a(ng-click="login('t')") #[img(src="/images/twitter.png",height="20px", width="20px")]]
-            li #[a(href="#",ng-click="login('f')") #[img(src="/images/facebook.jpg",height="20px", width="20px")]]
-            li #[a(href="#",ng-click="login('g')") #[img(src="/images/googleplus.jpg",height="20px", width="20px")]]
+            li #[a(ng-click="login('twitter')") #[img(src="/images/twitter.png",height="20px", width="20px")]]
+            li #[a(href="#",ng-click="login('facebook')") #[img(src="/images/facebook.jpg",height="20px", width="20px")]]
+            li #[a(href="#",ng-click="login('google')") #[img(src="/images/googleplus.jpg",height="20px", width="20px")]]
 
 script.
     function GetChildValue(val){
-        alert("called getchilde");
         var t = val.split('&')[0].split('=');
         var v = val.split('&')[1].split('=');
-        window.location.href= "/social/" + t + "/" + v; 
+        window.location.href= "/twitter/" + t + "/" + v; 
     }
