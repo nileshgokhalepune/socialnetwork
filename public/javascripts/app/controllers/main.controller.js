@@ -3,23 +3,20 @@
 
     angular.module('app').controller('mainCtrl', MainCtrl);
 
-    MainCtrl.$inject = ['$scope', '$stateProvider', 'DataSvc'];
+    MainCtrl.$inject = ['$scope', '$state', 'DataSvc', 'SharedService', '$location'];
 
-    function MainCtrl($scope, $stateProvider, DataSvc) {
+    function MainCtrl($scope, $state, DataSvc, SharedService, $location) {
 
         activate();
 
         function activate() {
-            DataSvc.checkAuth().then(function (res) {
-                if (res.data == true) {
-                    $state.go('/start');
-                } else {
-                    $state.go('/login');
-                }
-            }, function (err) {
-
-            })
+            if (SharedService.IsAuthenticatedUser()) {
+              $state.go('start');  
+            }else{
+                $state.go('login');
+            }
         }
 
     }
 })();
+ 

@@ -8,7 +8,8 @@
     function DataSvc($http, $log) {
         this.accessThirdParty = accessThirdParty;
         this.checkAuth = checkAuth;
-
+        this.isAuthenticated = false;
+        
         function checkAuth() {
             return $http.get('/users/auth');
         }
@@ -16,6 +17,7 @@
         function accessThirdParty(key) {
             return $http.get('/' + key);
         }
+        
     }
 
 })();

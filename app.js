@@ -9,12 +9,15 @@ var grant = new grantExpress('./config.json');
 var session = require('express-session');
 var request = require('request');
 var crypto = require('crypto');
+var jwt = require('express-jwt');
+var jsonwebtoken = require('jsonwebtoken');
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var apis = require('./routes/apis');
-var twitter= require('./routes/twitter');
-
+var twitter = require('./routes/twitter');
+var secret = 'shhhhhhared-secret';
 var app = express();
 
 // view engine setup
@@ -31,16 +34,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'very secret' }));
+//app.use(jwt({secret: 'shhhhhhared-secred'}));
+
 
 app.use('/social', routes);
 app.use('/users', users);
 app.use('/api', apis);
 app.use('/twitter', twitter);
+app.use('/api', jwt({ secret: secret }))
 
 app.get('/partials/:name', function (req, res) {
   res.render('partials/' + req.params.name);
 });
- 
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found');

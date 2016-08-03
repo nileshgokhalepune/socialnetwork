@@ -1,4 +1,6 @@
 var express = require('express');
+var expressJwt = require('express-jwt');
+var jsonwebtoken = require('jsonwebtoken');
 var htmlDecode = require('js-htmlencode').htmlDecode;
 var router = express.Router();
 var request = require('request');
@@ -44,8 +46,9 @@ router.get('/:oauth_token', function (req, res) {
     //console.log(decoded);
     var tokens = qs.parse(decoded);
     console.log(tokens);
-    req.session.user = tokens.screen_name;
-    req.session.auth = true;
+    expressJwt.sign(tokens, secret)
+    //req.session.user = tokens.screen_name;
+    //req.session.auth = true;
     //console.log(tokens);
     res.redirect(302, '/social/');
 });
