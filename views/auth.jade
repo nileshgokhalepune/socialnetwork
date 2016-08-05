@@ -1,3 +1,4 @@
 script.
-    window.opener.GetChildValue('#{authToken}');
+    debugger;
+    window.opener.angular.element("#loginCtrl").scope().setAuth('#{authToken}','#{provider}');
     self.close();

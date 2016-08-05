@@ -1,9 +1,11 @@
 var express = require('express');
 var expressJwt = require('express-jwt');
-var jsonwebtoken = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');
 var htmlDecode = require('js-htmlencode').htmlDecode;
 var router = express.Router();
 var request = require('request');
+var secret = "shhhhhared_secret";
+
 var qs = require("querystring"),
     oauth = {
         //callback: '	http://50.21.186.153/social/twitter/callback',
@@ -35,7 +37,7 @@ router.get('/callback', function (req, res, next) {
     }, function (e, resp, body) {
         var parms = qs.parse(body);
         //console.log(parms);
-        res.render('auth', { authToken: body });
+        res.render('auth', { authToken: body, provider: 'twitter' });
 
     });
 
@@ -45,12 +47,13 @@ router.get('/:oauth_token', function (req, res) {
     var decoded = htmlDecode(req.params.oauth_token);
     //console.log(decoded);
     var tokens = qs.parse(decoded);
-    console.log(tokens);
-    expressJwt.sign(tokens, secret)
+    //console.log(tokens);
+    var token = jwt.sign(tokens, secret);
+    console.log("Nilesh\r\n" + token);
     //req.session.user = tokens.screen_name;
     //req.session.auth = true;
     //console.log(tokens);
-    res.redirect(302, '/social/');
+    res.json(token);
 });
 
 module.exports = router;
