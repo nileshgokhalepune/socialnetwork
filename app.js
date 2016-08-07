@@ -17,6 +17,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var apis = require('./routes/apis');
 var twitter = require('./routes/twitter');
+var helpers = require('./helpers/helperapis');
 var secret = 'shhhhhhared-secret';
 var app = express();
 
@@ -34,6 +35,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'very secret' }));
+app.use(helpers);
 //app.use(jwt({secret: 'shhhhhhared-secred'}));
 
 
