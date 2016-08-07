@@ -1,0 +1,20 @@
+div(class="modal-box")
+      div(class="modal-dialog",ng-controller="registerCtrl")
+        div(class="modal-content")
+          div(class="modal-header")
+            button(type="button", class="close", data-dismiss="modal",ui-sref='start') &times;
+            h4(class="modal-title") Register
+          div(class="modal-body")
+            div(class="form-group")
+              label(class="label label-default") Name
+              input(type="text",class="form-control",ng-model="name")
+              label(class="label label-default") User Name
+              input(type="text",class="form-control",ng-model="registerUserName")
+              label(class="label label-default") Password
+              input(type="password",class="form-control",ng-model="registerPassword")
+              label(class="label label-default") Confirm Password
+              input(type="password",class="form-control",ng-model="registerConfirmPassword")
+              div(class="row") &nbsp;
+              button(class="btn btn-success",ng-click="register()") Register
+          div(class="modal-footer")
+            button(type="button", class="btn btn-default", data-dismiss="modal",ui-sref='start') Close        
