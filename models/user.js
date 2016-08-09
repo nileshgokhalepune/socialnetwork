@@ -1,30 +1,14 @@
-var express = require('express');
-var schemas = require('../models/schemas.js');
-var _ = require('lodash');
-var db = require('../dbhelper/dbconnect.js');
 var mongoose = require('mongoose');
-var guid = require('node-uuid');
+var Schema = mongoose.Schema;
 
-var User = function (data) {
-    console.log("Instantiate new user");
-    this.data = this.sanitize(data);
-    this.data.id = db.getId(); 
-    console.log(this.data);
-}
+var userSchema = new Schema({
+    username: String,
+    fname : String,
+    lname: String,
+    password: String,
+    twitter: Boolean,
+    facebook: Boolean,
+    googleplus : Boolean
+});
 
-User.prototype.save = function (callback) {
-    this.data = this.sanitize(this.data);
-    data = this.data
-    db.save(db.model(function () {
-        console.log(data);
-        return data;
-    }));
-}
-
-User.prototype.sanitize = function (data) {
-    data = data || {};
-    schema = schemas.user;
-    return _.pick(_.defaults(data, schema), _.keys(schema));
-}
-
-module.exports = User;
+module.exports = mongoose.model('Users', userSchema);

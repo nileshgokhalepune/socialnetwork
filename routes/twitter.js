@@ -7,7 +7,6 @@ var request = require('request');
 var User = require('../models/user.js');
 var secret = "shhhhhared_secret";
 
-
 var qs = require("querystring"),
     oauth = {
         consumer_key: 'IGe5AiDFqZ1wXBkWRXTgScSS4',
@@ -43,16 +42,15 @@ router.get('/callback', function (req, res, next) {
 router.get('/:oauth_token', function (req, res, next) {
     var decoded = req.params.oauth_token.replace(/&amp;/g, '&'); //htmlDecode(req.params.oauth_token);
     console.log('\033[2J');
-    console.log(decoded); 
+    //console.log(decoded);
     var tokens = qs.parse(decoded);
-    var user = new User({ username: tokens.screen_name, twitter:true });
-    user.save(function () {
-        var token = jwt.sign({ token: tokens.oauth_token, secret: oauth_token_secret }, secret);
-        res.json("User Created");
+    var user = new User({ username: tokens.screen_name});
+    user.save(function(err, usr){
+        if(err) console.error(err);
+        console.log('User saved');
     });
-    //console.log(helpers)
-    //res.json(token);
+    var token = jwt.sign({ token: tokens.oauth_token, secret: oauth_token_secret }, secret);
+    res.json("User Created");
 });
 
 module.exports = router;
-
