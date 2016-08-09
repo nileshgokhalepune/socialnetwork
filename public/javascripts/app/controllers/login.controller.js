@@ -2,14 +2,14 @@
     'use strict';
     angular.module('app').controller('loginCtrl', loginCtrl)
 
-    loginCtrl.$inject = ['$scope', '$state', 'AuthSvc'];
+    loginCtrl.$inject = ['$scope', '$state', '$window', 'AuthSvc'];
 
-    function loginCtrl($scope, $state, AuthSvc) {
+    function loginCtrl($scope, $state, $window, AuthSvc) {
         $scope.authdata;
         $scope.login = login;
         $scope.thirdparty = thirdparty;
         $scope.setAuth = setAuth;
-        
+
         function login() {
         }
 
@@ -23,16 +23,15 @@
                 alert("In Error" + err);
             });
         }
-        
-        function setAuth(authToken,provider){
-            AuthSvc.setAuth(authToken,provider).then(function(res){
-                debugger;
-                alert(res.data);
-                
-            },function(err){
-                
+
+        function setAuth(authToken, provider) {
+            AuthSvc.setAuth(authToken, provider).then(function (res) {
+                $window.sessionStorage.setItem('token', res.data);
+                $scope.localValue = $window.sessionStorage.getItem('token');
+                $state.go('start', {}, { reload: true });
+            }, function (err) {
+
             })
-            alert(authToken);
         }
     }
 })();

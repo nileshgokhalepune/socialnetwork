@@ -6,6 +6,7 @@ var router = express.Router();
 var request = require('request');
 var User = require('../models/user.js');
 var secret = "shhhhhared_secret";
+var twitterKey = 'twitter';
 
 var qs = require("querystring"),
     oauth = {
@@ -42,15 +43,23 @@ router.get('/callback', function (req, res, next) {
 router.get('/:oauth_token', function (req, res, next) {
     var decoded = req.params.oauth_token.replace(/&amp;/g, '&'); //htmlDecode(req.params.oauth_token);
     console.log('\033[2J');
-    //console.log(decoded);
+    console.log(decoded);
     var tokens = qs.parse(decoded);
-    var user = new User({ username: tokens.screen_name});
-    user.save(function(err, usr){
-        if(err) console.error(err);
-        console.log('User saved');
+    var user = new userModel({ username: tokens.screen_name, oauthToken: tokens.oauth_token, tokenSecret: tokens.oauth_token_secret });
+    console.log(user);
+    user.findUser(JSON.stringify({ username: tokens.screen_name, twitter: true }), function (errr, users) {
+        var temp = users.length === 1 ? users[0] : user;
+        if (users.length === 1) {
+            if (temp.oauthToken === tokens.oauth_token) {
+                console.log('Auth token matches');
+            }
+        } else if (user.length === 0) {
+            user.save().find();
+        }
+
+        var token = jwt.sign({ token: temp.oauthToken, secret: temp.tokenSecret }, secret);
+        res.json({ token: token, username: users[0].username });
     });
-    var token = jwt.sign({ token: tokens.oauth_token, secret: oauth_token_secret }, secret);
-    res.json("User Created");
 });
 
 module.exports = router;

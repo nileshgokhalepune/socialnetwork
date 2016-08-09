@@ -2,9 +2,12 @@ extends layout
 
 block content
   div(ng-controller="mainCtrl")
+  {{isAuthentic}}
   div(class="float-right",style="position:absolute;top:0px; right:0px;",ng-if="!authentic()")
     ul(style="list-style:none;display:flex;flex-direction:row;margin:3px;", class="nav nav-pills")
-      li(style="padding:5px;") #[button(class="btn btn-success",ui-sref="modal.login") Login]
-      li(style="padding:5px;") #[button(class="btn btn-primary",ui-sref="modal.register") Register]
+      li(style="padding:5px;",ng-hide="isAuthentic === true") #[button(class="btn btn-success",ui-sref="modal.login") Login]
+      li(style="padding:5px;",ng-hide="isAuthentic === true") #[button(class="btn btn-primary",ui-sref="modal.register") Register]
+      li(style="padding:5px;",ng-hide="isAuthentic === false") #[button(class="btn btn-primary",ui-sref="modal.register") Logout]
   div(ui-view)
   div(ui-view="modal" autoscroll=false)
+  

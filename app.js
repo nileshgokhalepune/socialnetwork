@@ -10,8 +10,9 @@ var session = require('express-session');
 var request = require('request');
 var crypto = require('crypto');
 var jwt = require('express-jwt');
-var jsonwebtoken = require('jsonwebtoken');
-
+var jsonwebtoken = require('jsonwebtoken'); 
+var database = require('./config/database');
+var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -35,6 +36,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'very secret' }));
 //app.use(jwt({secret: 'shhhhhhared-secred'}));
+
+
+mongoose.connect(database.url);
+var db = mongoose.connection;
+
+db.on('error',console.error.bind(console,'connection error'));
+db.once('open',function(){
+    console.log('connected');
+})
 
 
 app.use('/social', routes);

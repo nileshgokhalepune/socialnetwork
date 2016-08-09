@@ -3,15 +3,29 @@
     
     angular.module('app').controller('mainCtrl',MainCtrl);
     
-    MainCtrl.$inject = ['$scope'];
+    MainCtrl.$inject = ['$scope','$window'];
     
-    function MainCtrl($scope){
-        
-        $scope.authentic = authentic;
+    function MainCtrl($scope,$window){
+        $scope.someLabel ="Nilesh";
+        $scope.isAuthentic = false;
+        $scope.authenticate = authenticate;
         $scope.login = login;
         $scope.register = register;
-        function authentic() {
-            return false;
+        
+        activate();
+        
+        function  activate() {
+            $scope.authenticate();
+        }
+    
+        function authenticate() {
+            debugger;
+            if($window.sessionStorage.getItem('token')){
+                $scope.isAuthentic =  true;
+            }else{
+                $scope.isAuthentic =   false;
+            }
+            console.log($scope.isAuthentic);
         }
         
         function login() {
