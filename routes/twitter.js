@@ -4,8 +4,9 @@ var jwt = require('jsonwebtoken');
 var htmlDecode = require('js-htmlencode').htmlDecode;
 var router = express.Router();
 var request = require('request');
-var user = require('./models/user');
+var User = require('../models/user.js');
 var secret = "shhhhhared_secret";
+
 
 var qs = require("querystring"),
     oauth = {
@@ -24,7 +25,7 @@ router.get('/', function (req, res) {
 });
 
 router.get('/callback', function (req, res, next) {
-   var data = qs.parse(req.query);
+    var data = qs.parse(req.query);
     request.post({
         url: 'https://api.twitter.com/oauth/access_token',
         method: 'POST',
@@ -39,14 +40,18 @@ router.get('/callback', function (req, res, next) {
 
 });
 
-router.get('/:oauth_token', function (req, res) {
-    var decoded = htmlDecode(req.params.oauth_token);
+router.get('/:oauth_token', function (req, res, next) {
+    var decoded = req.params.oauth_token.replace(/&amp;/g, '&'); //htmlDecode(req.params.oauth_token);
+    console.log('\033[2J');
+    console.log(decoded); 
     var tokens = qs.parse(decoded);
-    var token = jwt.sign(tokens, secret);
-    console.log("Nilesh\r\n" + token);
-    use
-    console.log(helpers)
-    res.json(token);
+    var user = new User({ username: tokens.screen_name, twitter:true });
+    user.save(function () {
+        var token = jwt.sign({ token: tokens.oauth_token, secret: oauth_token_secret }, secret);
+        res.json("User Created");
+    });
+    //console.log(helpers)
+    //res.json(token);
 });
 
 module.exports = router;

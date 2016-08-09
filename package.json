@@ -15,10 +15,15 @@
     "express-jwt": "^3.4.0",
     "express-session": "^1.14.0",
     "grant-express": "^3.6.3",
+    "guid": "0.0.12",
     "jade": "~1.11.0",
     "js-htmlencode": "^0.1.0",
     "jsonwebtoken": "^7.1.7",
+    "lodash": "^4.14.1",
+    "mongodb": "^2.2.5",
+    "mongoose": "^4.5.8",
     "morgan": "~1.6.1",
+    "node-uuid": "^1.4.7",
     "querystring": "^0.2.0",
     "serve-favicon": "~2.3.0"
   }
