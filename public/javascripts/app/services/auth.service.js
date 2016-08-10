@@ -16,5 +16,9 @@
         function setAuth(authkey, provider) {
             return $http.get('/' + provider + '/' + authkey);
         }
+
+        function logout() {
+            return $http.post('/logout');
+        }
     }
 })();

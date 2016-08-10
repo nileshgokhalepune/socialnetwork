@@ -58,7 +58,8 @@ router.get('/:oauth_token', function (req, res, next) {
         }
 
         var token = jwt.sign({ token: temp.oauthToken, secret: temp.tokenSecret }, secret);
-        res.json({ token: token, username: temp.username });
+        res.setHeader('Content-Type', 'application/json');
+        res.json(JSON.stringify({ token: token, username: temp.username }));
     });
 });
 
