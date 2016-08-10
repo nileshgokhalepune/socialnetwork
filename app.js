@@ -9,10 +9,13 @@ var grant = new grantExpress('./config.json');
 var session = require('express-session');
 var request = require('request');
 var crypto = require('crypto');
-var jwt = require('express-jwt');
-var jsonwebtoken = require('jsonwebtoken'); 
+//var jwt = require('express-jwt');
+var jsonwebtoken = require('jsonwebtoken');
 var database = require('./config/database');
 var mongoose = require('mongoose');
+var passport = require('passport');
+var jwt = require('jwt-simple');
+require('./config/passport')(passport);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -34,16 +37,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'very secret' }));
-//app.use(jwt({secret: 'shhhhhhared-secred'}));
+app.use(session({ secret: database.secret }));
+app.use(passport.initialize());
+
 
 
 mongoose.connect(database.url);
 var db = mongoose.connection;
 
-db.on('error',console.error.bind(console,'connection error'));
-db.once('open',function(){
-    console.log('connected');
+db.on('error', console.error.bind(console, 'connection error'));
+db.once('open', function () {
+  console.log('connected');
 })
 
 
@@ -51,7 +55,7 @@ app.use('/social', routes);
 app.use('/users', users);
 app.use('/api', apis);
 app.use('/twitter', twitter);
-app.use('/api', jwt({ secret: secret }))
+//app.use('/api', jwt({ secret: secret }))
 
 app.get('/partials/:name', function (req, res) {
   res.render('partials/' + req.params.name);

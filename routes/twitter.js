@@ -5,8 +5,9 @@ var htmlDecode = require('js-htmlencode').htmlDecode;
 var router = express.Router();
 var request = require('request');
 var User = require('../models/user.js');
-var secret = "shhhhhared_secret";
 var twitterKey = 'twitter';
+var database = require('../config/database.js');
+//var userapi = require('../routes/users.js');
 
 var qs = require("querystring"),
     oauth = {
@@ -47,19 +48,47 @@ router.get('/:oauth_token', function (req, res, next) {
     var tokens = qs.parse(decoded);
     var user = new userModel({ username: tokens.screen_name, oauthToken: tokens.oauth_token, tokenSecret: tokens.oauth_token_secret });
     console.log(user);
-    user.findUser(JSON.stringify({ username: tokens.screen_name, twitter: true }), function (errr, users) {
-        var temp = users.length === 1 ? users[0] : user;
-        if (users.length === 1) {
-            if (temp.oauthToken === tokens.oauth_token) {
-                console.log('Auth token matches');
-            }
-        } else if (users.length === 0) {
-            user.save();
-        }
+    var url = 'https://api.twitter.com/1.1/users/show.json?screen_name=' + tokens.screen_name + '&user_id=' + tokens.screen_name;
+    var oauth = {
 
-        var token = jwt.sign({ token: temp.oauthToken, secret: temp.tokenSecret }, secret);
-        res.setHeader('Content-Type', 'application/json');
-        res.json(JSON.stringify({ token: token, username: temp.username }));
+    }
+    // request.get({
+
+    //     method: 'GET',
+    //     headers:{
+    //         oauth_token
+    //     },
+    //     function(e, resp, body) {
+
+    //     }
+    // })
+    request.post({
+        url: 'http://' + req.headers.host + '/users/signup',
+        form: {
+            username: tokens.screen_name,
+            password: tokens.oauth_token,
+            oauthToken: tokens.oauth_token,
+            tokenSecret: tokens.oauth_token_secret,
+            fname: tokens.screen_name,
+            lname: tokens.screen_name
+        },
+    }, function (e, r, body) {
+        var response = JSON.parse(body);
+        if (!response.success) {
+            request({
+                url: 'http://' + req.headers.host + '/users/authenticate',
+                method: 'POST',
+                form: {
+                    username: tokens.screen_name,
+                    password: tokens.oauth_token
+                }
+            }, function (e, r, body) {
+                var response = JSON.parse(body);
+                if (response.success) {
+                    res.json({ user: user, token: response.token });
+                }
+            });
+        }
     });
 });
 
