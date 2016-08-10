@@ -1,10 +1,10 @@
 (function () {
     angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('start');
+        $urlRouterProvider.otherwise('home');
 
         $stateProvider
-            .state('start', { templateUrl: 'partials/welcome', controller: 'startCtrl' })
+            .state('home', { templateUrl: 'partials/home', controller: 'homeCtrl' })
 
         $stateProvider
             .state('guest', { templateUrl: 'partials/guest', controller: 'guestCtrl' });

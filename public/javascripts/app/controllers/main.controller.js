@@ -19,7 +19,7 @@
             if(!$scope.isAuthentic){
                 $state.go('guest');
             }else{
-                $state.go('start');
+                $state.go('home');
             }
         }
 

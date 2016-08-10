@@ -1,11 +1,11 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('startCtrl', StartCtrl);
+    angular.module('app').controller('homeCtrl', HomeCtrl);
 
-    StartCtrl.$inject = ['$scope', '$window'];
+    HomeCtrl.$inject = ['$scope', '$window'];
 
-    function StartCtrl($scope, $window) {
+    function HomeCtrl($scope, $window) {
         $scope.username;
         activate();
 
@@ -13,7 +13,6 @@
             var token = $window.sessionStorage.getItem('token');
             $scope.username = token.username;
         }
-
     }
 
 })();
