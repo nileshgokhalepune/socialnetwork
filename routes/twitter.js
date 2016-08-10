@@ -53,12 +53,12 @@ router.get('/:oauth_token', function (req, res, next) {
             if (temp.oauthToken === tokens.oauth_token) {
                 console.log('Auth token matches');
             }
-        } else if (user.length === 0) {
-            user.save().find();
+        } else if (users.length === 0) {
+            user.save();
         }
 
         var token = jwt.sign({ token: temp.oauthToken, secret: temp.tokenSecret }, secret);
-        res.json({ token: token, username: users[0].username });
+        res.json({ token: token, username: temp.username });
     });
 });
 

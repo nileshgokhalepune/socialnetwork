@@ -1,0 +1,5 @@
+div(class="float-right",style="position:absolute;top:0px; right:0px;")
+    ul(style="list-style:none;display:flex;flex-direction:row;margin:3px;", class="nav nav-pills")
+        li(style="padding:5px;") #[button(class="btn btn-success",ui-sref="guest.modal.login") Login]
+        li(style="padding:5px;") #[button(class="btn btn-primary",ui-sref="modal.register") Register]
+div(ui-view="modal",autoscroll=false)

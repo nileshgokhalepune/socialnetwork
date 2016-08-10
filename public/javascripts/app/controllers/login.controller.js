@@ -28,9 +28,10 @@
             AuthSvc.setAuth(authToken, provider).then(function (res) {
                 $window.sessionStorage.setItem('token', res.data);
                 $scope.localValue = $window.sessionStorage.getItem('token');
-                $state.go('start', {}, { reload: true });
+                $state.go('start', null, { reload: true });
+                //location.reload();
             }, function (err) {
-
+                debugger;
             })
         }
     }

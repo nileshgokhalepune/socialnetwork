@@ -4,7 +4,13 @@
         $urlRouterProvider.otherwise('start');
 
         $stateProvider
-            .state('modal', {
+            .state('start', { templateUrl: 'partials/welcome', controller: 'startCtrl' })
+
+        $stateProvider
+            .state('guest', { templateUrl: 'partials/guest', controller: 'guestCtrl' });
+
+        $stateProvider
+            .state('guest.modal', {
                 views: {
                     'modal': {
                         templateUrl: "partials/modal"
@@ -13,7 +19,7 @@
                 abstract: true
             });
         $stateProvider
-            .state('modal.login', {
+            .state('guest.modal.login', {
                 views: {
                     'modal': {
                         templateUrl: 'partials/login', controller: 'loginCtrl'
@@ -21,15 +27,21 @@
                 }
             });
         $stateProvider
-            .state('modal.register',{
-                views:{
-                    'modal':{
-                        templateUrl:'partials/register', controller:'registerCtrl'
+            .state('guest.modal.register', {
+                views: {
+                    'modal': {
+                        templateUrl: 'partials/register', controller: 'registerCtrl'
                     }
                 }
             });
+
         $stateProvider
-            .state('start', { template: '<h1>Start</h1>' })
+            .state('transition', {
+                url: 'transition?destination',
+                controller: function ($state, $stateParams) {
+                    $state.go($stateParams.destination);
+                }
+            })
     });
 
 })();
