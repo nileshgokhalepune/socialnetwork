@@ -6,7 +6,6 @@
     MainCtrl.$inject = ['$scope', '$window', '$state'];
 
     function MainCtrl($scope, $window, $state) {
-        $scope.someLabel = "Nilesh";
         $scope.isAuthentic = false;
         $scope.authenticate = authenticate;
         $scope.login = login;

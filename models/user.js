@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var database = require('../config/database');
-var Schema = mongoose.Schema;
 var bcrypt = require('bcryptjs');
+var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
     username: {
@@ -16,7 +16,10 @@ var userSchema = new Schema({
     facebook: Boolean,
     googleplus: Boolean,
     oauthToken: String,
-    tokenSecret: String
+    tokenSecret: String,
+    isProfileComplete: Boolean,
+    phoneNumber: String,
+    gender: String
 });
 
 userSchema.pre('save', function (next) {
@@ -25,25 +28,12 @@ userSchema.pre('save', function (next) {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(user.password, salt);
         user.password = hash;
-        return next();
-        // bcrypt.genSalt(10, function (err, salt) {
-        //     if (err) {
-        //         return next(err);
-        //     }
-        //     bcrypt.hash("B4c0/\/", salt, function (err, hash) {
-        //         if (err) {
-        //             return next(err);
-        //         }
-        //         user.password = hash;
-        //         return next();
-        //     });
-        // });
+        return next(); 
     }
     return next();
 });
 
-userSchema.methods.comparePassword = function (passw, cb) {
-    //bcrypt.compareSync(passw, this.password);
+userSchema.methods.comparePassword = function (passw, cb) { 
     bcrypt.compare(passw, this.password, function (err, isMatch) {
         if (err) {
             return cb(err);
@@ -59,8 +49,7 @@ userSchema.methods.findUser = function (query, callback) {
 userSchema.methods.sanitize = function (data) {
     data = data || {};
     schema = schemas.user;
-    return _.pick(_.defaults(data, schema), _.keys(schema));
-
+    return _.pick(_.defaults(data, schema), _.keys(schema)); 
 }
 
 userModel = mongoose.model('Users', userSchema);

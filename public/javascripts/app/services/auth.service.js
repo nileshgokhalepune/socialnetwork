@@ -6,31 +6,62 @@
     AuthSvc.$inject = ['$http', '$log', 'AUTH_ENDPOINT']
 
     function AuthSvc($http, $log, AUTH_ENDPOINT) {
-        this.accessThirdParty = accessThirdParty;
-        this.setAuth = setAuth;
-        var isAuthenticated = false;
-        var authToken;
-        
+        var service = this;
+        service.accessThirdParty = accessThirdParty;
+        service.setAuth = setAuth;
+        service.getUserData = getUserData;
+        service.useCredentials = useCredentials;
+        service.getUserName = getUserName;
+        service.destroy = destroy;
+        service.logout = logout;
+        service.userdata;
+        service.isAuthenticated = false;
+        service.authToken;
+
         function accessThirdParty(key) {
             return $http.get('/' + key);
         }
 
         function setAuth(authkey, provider, callback) {
-            $http.get('/' + provider + '/' + authkey).then(function(res){
-               window.sessionStorage.setItem('token', res.data.token);
-               useCredentials(res.data.token);
-               callback(res.data.username);
+            $http.get('/' + provider + '/' + authkey).then(function (res) {
+                service.useCredentials(res.data);
+                callback(res.data.user);
             });
         }
 
         function logout() {
+            destroy();
             return $http.post('/logout');
         }
 
-        function useCredentials(token) {
-            isAuthenticated = true;
-            authToken = token;
-            $http.defaults.headers.common.Authorization = authToken;
+        function destroy() {
+            window.sessionStorage.removeItem('token');
+            window.sessionStorage.removeItem('ud');
+            service.isAuthenticated = false;
+            service.authToken = null;
+            service.userdata = null;
+            $http.defaults.headers.common.Authorization = "";
+        }
+
+        function useCredentials(data) {
+            window.sessionStorage.setItem('token', data.token);
+            window.sessionStorage.setItem('ud', JSON.stringify(data.user));
+            service.isAuthenticated = true;
+            service.authToken = data.token;
+            service.userdata = data.user;
+            $http.defaults.headers.common.Authorization = service.authToken;
+        }
+
+        function getUserName() {
+            if (JSON.parse(window.sessionStorage.getItem('ud'))) {
+                return JSON.parse(window.sessionStorage.getItem('ud')).username;
+            } else {
+                return null;
+            }
+        }
+
+        function getUserData() {
+            return JSON.parse(window.sessionStorage.getItem('ud'));
         }
     }
 })();

@@ -52,16 +52,7 @@ router.get('/:oauth_token', function (req, res, next) {
     var oauth = {
 
     }
-    // request.get({
 
-    //     method: 'GET',
-    //     headers:{
-    //         oauth_token
-    //     },
-    //     function(e, resp, body) {
-
-    //     }
-    // })
     request.post({
         url: 'http://' + req.headers.host + '/users/signup',
         form: {

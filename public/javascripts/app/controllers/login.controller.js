@@ -26,15 +26,10 @@
 
         function setAuth(authToken, provider) {
             AuthSvc.setAuth(authToken, provider, function (data) {
+                window.sessionStorage.setItem('name', data.user)
                 $state.go('home', null, { reload: true });
             });
 
-            // .then(function (res) {
-            //     $state.go('home', null, { reload: true });
-            //     //location.reload();
-            // }, function (err) {
-            //     debugger;
-            // })
         }
     }
 })();
