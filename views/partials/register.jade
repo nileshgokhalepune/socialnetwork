@@ -2,7 +2,7 @@ div(class="modal-box")
       div(class="modal-dialog",ng-controller="registerCtrl")
         div(class="modal-content")
           div(class="modal-header")
-            button(type="button", class="close", data-dismiss="modal",ui-sref='start') &times;
+            button(type="button", class="close", data-dismiss="modal",ui-sref='guest') &times;
             h4(class="modal-title") Register
           div(class="modal-body")
             div(class="form-group")
@@ -10,8 +10,31 @@ div(class="modal-box")
               input(type="text",class="form-control",ng-model="name")
               label(class="label label-default") User Name
               input(type="text",class="form-control",ng-model="registerUserName")
-              label(class="label label-default") Password
               div
+                label(class="label label-default") Gender
+                select(ng-model="registerGender",class="form-control")
+                  option(value="Male") Male
+                  option(value="Female") Female
+              div
+                label(class="label label-default") Date of Birth
+                div(class="form-inline")
+                  input(type="text",class="form-control",placeholder="dd",style="width:50px",ng-model="registerDobDD")
+                  input(type="text",class="form-control",placeholder="mm",style="width:50px",ng-model="registerDobMM")
+                  input(type="text",class="form-control",placeholder="yyyy",style="width:100px",ng-model="registerDobYY")
+              div
+                label(class="label label-default") City
+                input(type="text",class="form-control",placeholder="e.g. Nashville",ng-class="",ng-model="registerCity",ng-keyup="searchCity()")
+              div
+                label(class="label label-default") E-mail Address
+                input(type="text",class="form-control",placeholder="e.g. someemail@someserver.com",ng-model="registerEmail")
+              div
+                label(class="label label-default") Looking for
+                select(ng-model="registerInterest",class="form-control")
+                  option(value="Male") Woman
+                  option(value="Female") Men
+                  option(value="Both") Both                
+              div
+                label(class="label label-default") Password
                 input(type="password",class="form-control",ng-model="registerPassword",name="registerPassword",id="registerPassword")
                 ul(id="strength", check-strength="registerPassword")
               div(ng-show="(registerPassword && registerConfirmPassword) &&  registerPassword !== registerConfirmPassword")
