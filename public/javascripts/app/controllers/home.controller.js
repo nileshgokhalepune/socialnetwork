@@ -8,7 +8,6 @@
     function HomeCtrl($scope, $state, $window, AuthSvc) {
         $scope.username;
         $scope.logout = logout;
-
         activate();
 
         function activate() {
@@ -20,6 +19,7 @@
             AuthSvc.logout();
             $state.go('guest');
         }
+
     }
 
 })();

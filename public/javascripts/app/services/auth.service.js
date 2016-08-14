@@ -14,6 +14,7 @@
         service.getUserName = getUserName;
         service.destroy = destroy;
         service.logout = logout;
+        //service.CheckCors = CheckCors;
         service.userdata;
         service.isAuthenticated = false;
         service.authToken;
@@ -63,5 +64,17 @@
         function getUserData() {
             return JSON.parse(window.sessionStorage.getItem('ud'));
         }
+
+        // function CheckCors() {
+        //     $http({
+        //         url: 'http://localhost:61414/home',
+        //         withCredentials: true,
+        //         method: 'GET'
+        //     }).then(function (gotit) {
+        //         alert("got it");
+        //     }, function (ehhh) {
+        //         alert("error");
+        //     });
+        // }
     }
 })();

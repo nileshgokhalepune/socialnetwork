@@ -11,10 +11,14 @@ div(class="modal-box")
               label(class="label label-default") User Name
               input(type="text",class="form-control",ng-model="registerUserName")
               label(class="label label-default") Password
-              input(type="password",class="form-control",ng-model="registerPassword")
+              div
+                input(type="password",class="form-control",ng-model="registerPassword",name="registerPassword",id="registerPassword")
+                ul(id="strength", check-strength="registerPassword")
+              div(ng-show="(registerPassword && registerConfirmPassword) &&  registerPassword !== registerConfirmPassword")
+                span #[i(class="fa fa-meh-o") #[i(class="fa fa-long-arrow-up") Not Matching]]
               label(class="label label-default") Confirm Password
               input(type="password",class="form-control",ng-model="registerConfirmPassword")
               div(class="row") &nbsp;
               button(class="btn btn-success",ng-click="register()") Register
           div(class="modal-footer")
-            button(type="button", class="btn btn-default", data-dismiss="modal",ui-sref='start') Close        
+            button(type="button", class="btn btn-default", data-dismiss="modal",ui-sref='guest') Close        
