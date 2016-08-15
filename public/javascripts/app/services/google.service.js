@@ -11,6 +11,7 @@
         service.getPlaces = getPlaces;
 
         function getPlaces(searchText) {
+            console.log(searchText);
             return $http({
                 url: '/api/places?search=' + searchText,
                 method: 'GET'
