@@ -26,7 +26,7 @@
         function setAuth(authkey, provider, callback) {
             $http.get('/' + provider + '/' + authkey).then(function (res) {
                 service.useCredentials(res.data);
-                callback(res.data.user);
+                callback(res.data);
             });
         }
 
@@ -45,16 +45,20 @@
         }
 
         function useCredentials(data) {
-            window.sessionStorage.setItem('token', data.token);
-            window.sessionStorage.setItem('ud', JSON.stringify(data.user));
-            service.isAuthenticated = true;
-            service.authToken = data.token;
-            service.userdata = data.user;
-            $http.defaults.headers.common.Authorization = service.authToken;
+            if (data.success) {
+                window.sessionStorage.setItem('token', data.token);
+                window.sessionStorage.setItem('ud', JSON.stringify(data.user));
+                service.isAuthenticated = true;
+                service.authToken = data.token;
+                service.userdata = data.user;
+                $http.defaults.headers.common.Authorization = service.authToken;
+            }
         }
 
         function getUserName() {
-            if (JSON.parse(window.sessionStorage.getItem('ud'))) {
+            var item = window.sessionStorage.getItem('ud')
+            if (item === "undefined") return null;
+            if (JSON.parse()) {
                 return JSON.parse(window.sessionStorage.getItem('ud')).username;
             } else {
                 return null;

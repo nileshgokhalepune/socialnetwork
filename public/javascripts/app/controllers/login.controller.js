@@ -45,9 +45,13 @@
         function setAuth(authToken, provider) {
             $scope.loggingin = true;
             AuthSvc.setAuth(authToken, provider, function (data) {
-                window.sessionStorage.setItem('name', data.user)
-                $scope.loggingin = false;
-                $state.go('home', null, { reload: true });
+                if (data.success) {
+                    window.sessionStorage.setItem('name', data.user)
+                    $scope.loggingin = false;
+                    $state.go('home', null, { reload: true });
+                } else if (!data.success) {
+                    $state.go('guest.modal.register', { userdata: JSON.stringify(data.userData) });
+                }
             });
 
         }

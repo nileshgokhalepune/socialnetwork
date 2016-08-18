@@ -24,6 +24,7 @@
     "mongodb": "^2.2.5",
     "mongoose": "^4.5.8",
     "morgan": "~1.6.1",
+    "node-linq": "0.0.5",
     "node-uuid": "^1.4.7",
     "passport": "^0.3.2",
     "passport-jwt": "^2.1.0",

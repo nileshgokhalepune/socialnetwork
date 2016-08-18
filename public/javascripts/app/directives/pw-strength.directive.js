@@ -54,13 +54,13 @@
                     };
 
                     scope.$watch(iAttrs.checkStrength, function () {
-                        if (scope.registerPassword === '') {
+                        if (scope.user.password === '') {
                             iElement.css({ "display": "none" });
-                        }else if(!scope.registerPassword){
+                        }else if(!scope.user.password){
                             return;
                         }
                          else {
-                            var c = strength.getColor(strength.mesureStrength(scope.registerPassword));
+                            var c = strength.getColor(strength.mesureStrength(scope.user.password));
                             iElement.css({ "display": "inline" });
                             iElement.children('li')
                                 .css({ "background": "#DDD" })

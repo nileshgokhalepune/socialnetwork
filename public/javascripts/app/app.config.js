@@ -28,6 +28,7 @@
             });
         $stateProvider
             .state('guest.modal.register', {
+                url:'register/:userdata',
                 views: {
                     'modal': {
                         templateUrl: 'partials/register', controller: 'registerCtrl'

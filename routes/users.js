@@ -20,14 +20,20 @@ router.get('/:username', function (req, res, next) {
 
 
 router.post('/signup', function (req, res, next) {
-  if (!req.body.username || !req.body.password || !req.body.fname || !req.body.lname) {
+  if (!req.body.userName || !req.body.password || !req.body.name) {
     res.json({ success: false, msg: "Please pass all required parameters" });
   } else {
     var newUser = new User({
-      username: req.body.username,
-      password: req.body.password,
-      fname: req.body.fname,
-      lname: req.body.lname
+      name: req.body.name,
+      username: req.body.userName,
+      password: req.body.password, 
+      email: req.body.email,
+      gender:req.body.gender,
+      interest:req.body.interest,
+      dobDay:req.body.dobDD,
+      dobMonth:req.body.dobMM,
+      dobYear:req.body.dobYY,
+      locatioN: req.body.city
     });
 
     newUser.save(function (err) {

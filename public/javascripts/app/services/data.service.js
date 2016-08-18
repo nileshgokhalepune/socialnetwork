@@ -11,7 +11,7 @@
 
         function register(data) {
             return $http({
-                url: '/signup',
+                url: '/users/signup',
                 data: JSON.stringify(data),
                 method: 'POST'
             });

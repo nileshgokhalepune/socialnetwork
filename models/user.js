@@ -9,9 +9,18 @@ var userSchema = new Schema({
         unique: true,
         required: true
     },
-    fname: String,
-    lname: String,
+    name: String,
+    location: String,
+    email: {
+        type: String,
+        unique: true,
+        require: true
+    },
     password: String,
+    interest: String,
+    dobDay: Number,
+    dobMonth: Number,
+    dobYear: Number,
     twitter: Boolean,
     facebook: Boolean,
     googleplus: Boolean,
@@ -28,12 +37,12 @@ userSchema.pre('save', function (next) {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(user.password, salt);
         user.password = hash;
-        return next(); 
+        return next();
     }
     return next();
 });
 
-userSchema.methods.comparePassword = function (passw, cb) { 
+userSchema.methods.comparePassword = function (passw, cb) {
     bcrypt.compare(passw, this.password, function (err, isMatch) {
         if (err) {
             return cb(err);
@@ -49,7 +58,7 @@ userSchema.methods.findUser = function (query, callback) {
 userSchema.methods.sanitize = function (data) {
     data = data || {};
     schema = schemas.user;
-    return _.pick(_.defaults(data, schema), _.keys(schema)); 
+    return _.pick(_.defaults(data, schema), _.keys(schema));
 }
 
 userModel = mongoose.model('Users', userSchema);
