@@ -56,9 +56,9 @@
         }
 
         function getUserName() {
-            var item = window.sessionStorage.getItem('ud')
+            var item = window.sessionStorage.getItem('ud');
             if (item === "undefined") return null;
-            if (JSON.parse()) {
+            if (JSON.parse(item)) {
                 return JSON.parse(window.sessionStorage.getItem('ud')).username;
             } else {
                 return null;

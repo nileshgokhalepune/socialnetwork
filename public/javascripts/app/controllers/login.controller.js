@@ -46,7 +46,7 @@
             $scope.loggingin = true;
             AuthSvc.setAuth(authToken, provider, function (data) {
                 if (data.success) {
-                    window.sessionStorage.setItem('name', data.user)
+                    window.sessionStorage.setItem('name', data.user.username)
                     $scope.loggingin = false;
                     $state.go('home', null, { reload: true });
                 } else if (!data.success) {

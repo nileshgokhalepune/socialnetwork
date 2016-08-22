@@ -3,9 +3,9 @@
 
     angular.module('app').controller('registerCtrl', RegisterCtrl);
 
-    RegisterCtrl.$inject = ['$scope', '$state', '$stateParams','toastr', 'DataSvc', 'GoogleSvc'];
+    RegisterCtrl.$inject = ['$scope', '$state', '$stateParams', 'toastr', 'DataSvc', 'GoogleSvc', 'AuthSvc'];
 
-    function RegisterCtrl($scope, $state, $stateParams, toastr, DataSvc, GoogleSvc) {
+    function RegisterCtrl($scope, $state, $stateParams, toastr, DataSvc, GoogleSvc, AuthSvc) {
         $scope.user = {};
         $scope.register = register;
         $scope.searchCity = searchCity;
@@ -15,28 +15,28 @@
         $scope.isActive = false;
         $scope.places = new Array();
         $scope.pw;
-        
+
         activate();
-        
-        function activate(){
-            if($stateParams && !$stateParams.userdata === "" && !$scope.isActive){
+
+        function activate() {
+            if ($stateParams && !$stateParams.userdata === "" && !$scope.isActive) {
                 toastr.success('We are almost there, you just need to fill in few fields that are required to get you started.')
-                var userdata = JSON.parse($stateParams.userdata); 
+                var userdata = JSON.parse($stateParams.userdata);
                 $scope.user.name = userdata.username;
                 $scope.user.city = userdata.location;
-                $scope.user.userName = userdata.userName ? userdata.userName : userdata.name;
+                $scope.user.username = userdata.username ? userdata.username : userdata.name;
                 $scope.isActive = true;
             }
         }
-        
+
         function register() {
-            if($scope.registerForm.$invalid){
+            if ($scope.registerForm.$invalid) {
                 return;
             }
-            DataSvc.register($scope.user).then(function(res){
+            DataSvc.register($scope.user).then(function (res) {
                 toastr.success(res.data);
                 $state.go('home');
-            },function(err){
+            }, function (err) {
                 toastr.error(err);
             });
             // if (!$scope.user.name || $scope.user.name === '') {

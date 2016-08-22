@@ -14,38 +14,38 @@ router.get('/:username', function (req, res, next) {
     username: req.params.username
   }, function (err, user) {
     if (err) throw err;
-    res.json({success: true, user: user});
+    res.json({ success: true, user: user });
   })
 });
 
 
 router.post('/signup', function (req, res, next) {
-  if (!req.body.userName || !req.body.password || !req.body.name) {
-    res.json({ success: false, msg: "Please pass all required parameters" });
+  if (!req.body.username || !req.body.password || !req.body.name) { //Check if minimum required fields are populated
+    res.json({ success: false, msg: "Please pass all required parameters" }); 
   } else {
-    var newUser = new User({
+    var newUser = new User({ //create new user object
       name: req.body.name,
-      username: req.body.userName,
-      password: req.body.password, 
+      username: req.body.username,
+      password: req.body.password,
       email: req.body.email,
-      gender:req.body.gender,
-      interest:req.body.interest,
-      dobDay:req.body.dobDD,
-      dobMonth:req.body.dobMM,
-      dobYear:req.body.dobYY,
-      locatioN: req.body.city
+      gender: req.body.gender,
+      interest: req.body.interest,
+      dobDay: req.body.dobDD,
+      dobMonth: req.body.dobMM,
+      dobYear: req.body.dobYY,
+      location: req.body.city
     });
 
-    newUser.save(function (err) {
-      if (err) {
-        return res.json({ success: false, msg: 'User already exists' });
+    newUser.save(function (err) {//save the user
+      if (err) { //if we get any error notify the caller.
+        return res.json({ success: false, code: err.code, msg: 'User already exists' });
       }
-      res.json({ success: true, msg: 'Successfully created new user' });
+      res.json({ success: true, msg: 'Successfully created new user' }); //else notify success to the caller.
     })
   }
 });
 
-router.post('/authenticate', function (req, res) {
+router.post('/authenticate', function (req, res) { //authenticat the user sent in the request
   User.findOne({
     username: req.body.username
   }, function (err, user) {
